@@ -1,6 +1,10 @@
 import express from "express";
 import mongoose from "mongoose";
-import booksRoute from "./routes/booksRoute.js"
+import dotenv from "dotenv";
+import booksRoute from "./routes/booksRoute.js";
+import { connectDB } from "./config/db.js";
+
+dotenv.config();
 
 const PORT = 3000;
 
@@ -19,10 +23,8 @@ app.get('/', (req, res) => {
 app.use('/books', booksRoute);
 
 app.listen(PORT, () => {
-    console.log(`runing on http://localhost:${PORT}`);
+    console.log(`runing on PORT:${PORT}`);
 
-    mongoose.connect('mongodb://localhost:27017/BookStore')
-    .then(() => console.log("database connected"))
-    .catch(error => console.log(error));
+    connectDB()
 });
 
